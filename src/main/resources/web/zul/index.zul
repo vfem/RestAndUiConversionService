@@ -1,0 +1,23 @@
+<zk>
+	<?page title="DOC/DOCX/RTF Converter"?>
+	<window title="DOC/DOCX/RTF Converter" border="normal"
+			viewModel="@id('vm') @init('ru.example.VM.IndexVM')" position="center, center" width="500px"
+			mode="overlapped">
+		<vlayout>
+			<label value="Загрузите файл"/>
+			<label value="Максимальный размер 10Мб"/>
+			<button label="Загрузить" upload="true, maxsize=10000" onUpload="@command('uploadFile',upload=event)"
+					autodisable="self"/>
+			<hlayout>Результат: <label value="@load(vm.message)" style="font-weight:bold"/></hlayout>
+			<radiogroup id="saveFormat" selectedItem="@bind(vm.saveFormat)">
+				<zscript>
+					Boolean showPdf = vm.hideRadioDocument || vm.hideRadioSpreadsheet;
+				</zscript>
+				<radio id="pdf" label="PDF" value="40"/>
+				<radio id="odt" label="ODT" value="60" disabled="@load(vm.hideRadioDocument)"/>
+				<radio id="ods" label="ODS" value="14" disabled="@load(vm.hideRadioSpreadsheet)"/>
+			</radiogroup>
+			<button id="convertButton" label="Конвертация" onClick="@command('convert')" disabled="@load(vm.hideConvertButton)"/>
+		</vlayout>
+	</window>
+</zk>
